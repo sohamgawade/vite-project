@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ApplyJobDrawer from '@/components/apply-job';
+import ApplicationCard from '@/components/application-card';
 const Jobpage = () => {
   const {isLoaded,user}=useUser();
   const {id}=useParams();
@@ -122,7 +123,16 @@ if (!isLoaded || loadingJob) {
           applied={job?.applications?.find((ap) => ap.candidate_id === user.id)}//check wether user has already applied or not
         />
       )}
-
+        {job?.applications?.length > 0 && job?.recruiter_id === user?.id && (
+        <div className="flex flex-col gap-2">
+          <h2 className="font-bold mb-4 text-xl ml-1">Applications</h2>
+          {job?.applications.map((application) => {
+            return (
+              <ApplicationCard key={application.id} application={application} />
+            );
+          })}
+           </div>
+             )}
     </div>
   )
 }
